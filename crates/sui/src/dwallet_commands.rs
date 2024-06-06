@@ -125,6 +125,7 @@ impl SuiDWalletCommands {
                 serialize_unsigned_transaction,
                 serialize_signed_transaction,
             } => {
+                // TODO: Break into small functions.
                 if context.config.dwallets.iter().any(|d| d.alias == alias) {
                     return Err(anyhow!(
                         "dWallet config with name [{alias}] already exists."
@@ -147,7 +148,6 @@ impl SuiDWalletCommands {
                 let sender = gas_owner.unwrap_or(context.active_address()?);
 
                 let client = context.get_client().await?;
-
                 let mut pt_builder = ProgrammableTransactionBuilder::new();
 
                 let commitment_to_centralized_party_secret_key_share = pt_builder.input(CallArg::from(&commitment_to_centralized_party_secret_key_share)).unwrap();
